@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Istituto Stradivari - Gestione Passaggio d'Anno</title>
+    <title>Istituto Stradivari - Generatore Smart Gruppi Workspace</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
@@ -14,148 +14,79 @@
         <div class="bg-gradient-to-r py-6 px-8 text-white flex items-center justify-between" style="background-image: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);">
             <div>
                 <h1 class="text-2xl font-bold tracking-tight">Istituto Stradivari</h1>
-                <p class="text-blue-100 text-sm mt-1">Pannello di Automazione Account e Prontuario Gruppi 2025/2026</p>
+                <p class="text-blue-100 text-sm mt-1">Generatore Intelligente di Membri Gruppo tramite Parole Chiave</p>
             </div>
             <span class="bg-emerald-500 text-white text-xs px-3 py-1.5 rounded-full font-semibold uppercase tracking-wider shadow-sm">🔒 Locale & GDPR Compliant</span>
         </div>
 
         <div class="p-8 space-y-8">
             
-            <div class="bg-blue-50/60 border border-blue-100 rounded-xl p-6">
-                <h2 class="text-blue-900 font-bold text-lg mb-4 flex items-center gap-2">
-                    默默 Guida Operativa per i Collaboratori (Passo dopo Passo)
-                </h2>
+            <div class="bg-slate-50 p-6 rounded-xl border border-slate-200 space-y-4">
+                <div>
+                    <h2 class="text-slate-900 font-bold text-lg">📂 1. Carica il File di Anagrafica della Scuola</h2>
+                    <p class="text-xs text-slate-500 mt-1">Inserisci l'Excel unico con classi, dipartimenti, mail e coordinatori dell'anno in corso.</p>
+                </div>
                 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm text-slate-600">
-                    <div class="space-y-2">
-                        <div class="flex items-center gap-2 font-bold text-blue-800">
-                            <span class="bg-blue-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs">1</span>
-                            Estrai i Dati da Google
-                        </div>
-                        <p class="pl-8 leading-relaxed">
-                            Accedi alla Console Google Workspace. Vai su <b>Directory > Gruppi</b>, seleziona <code class="bg-blue-100/80 px-1 rounded text-blue-900 font-mono text-xs">docenti@istitutostradivari.it</code> e clicca su <b>"Esporta membri"</b>.
-                        </p>
-                    </div>
-
-                    <div class="space-y-2">
-                        <div class="flex items-center gap-2 font-bold text-blue-800">
-                            <span class="bg-blue-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs">2</span>
-                            Carica ed Elabora
-                        </div>
-                        <p class="pl-8 leading-relaxed">
-                            Inserisci nei riquadri l'Excel dei <b>nuovi docenti attivi</b> della segreteria e l'esportazione di Google. Clicca sul pulsante blu di confronto.
-                        </p>
-                    </div>
-
-                    <div class="space-y-2">
-                        <div class="flex items-center gap-2 font-bold text-blue-800">
-                            <span class="bg-blue-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs">3</span>
-                            Applica Sospensioni
-                        </div>
-                        <p class="pl-8 leading-relaxed">
-                            Scarica il CSV generato, vai su Google Workspace in <b>Directory > Utenti</b>, usa <b>"Aggiornamento massivo"</b> per caricare il file e sospendere i cessati.
-                        </p>
-                    </div>
+                <div class="bg-white border border-slate-200 rounded-xl p-4 text-center max-w-md mx-auto">
+                    <input type="file" id="fileScuola" accept=".xls,.xlsx" class="block w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer"/>
+                    <div id="statusUpload" class="text-xs font-medium text-emerald-600 mt-2 hidden">✓ File letto con successo! Attivazione motore di ricerca gruppi qui sotto.</div>
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="border-2 border-dashed border-slate-200 hover:border-blue-400 rounded-xl p-6 bg-slate-50/50 transition flex flex-col items-center justify-center text-center">
-                    <span class="text-3xl mb-2">📄</span>
-                    <label class="block text-sm font-semibold text-slate-700 mb-1">1. Nuovi Docenti Attivi (Anno Nuovo)</label>
-                    <p class="text-xs text-slate-400 mb-4">Seleziona l'Excel ufficiale della segreteria</p>
-                    <input type="file" id="fileActive" accept=".xls,.xlsx,.csv" class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer"/>
-                    <div id="statusActive" class="text-xs font-medium text-emerald-600 mt-3 hidden">✓ File caricato e analizzato</div>
+            <div id="bloccoConfigurazione" class="opacity-40 pointer-events-none transition-all duration-300 border border-slate-200 rounded-2xl bg-white p-6 shadow-sm space-y-6">
+                <div>
+                    <h2 class="text-xl font-bold text-slate-900">🔍 2. Digita cosa desideri generare</h2>
+                    <p class="text-xs text-slate-500 mt-0.5">Scrivi liberamente la tua richiesta usando parole chiave naturali (es. "tutti i docenti", "tutti i docenti arredo", "matematica", "1 Liceo Musicale").</p>
                 </div>
 
-                <div class="border-2 border-dashed border-slate-200 hover:border-blue-400 rounded-xl p-6 bg-slate-50/50 transition flex flex-col items-center justify-center text-center">
-                    <span class="text-3xl mb-2">👥</span>
-                    <label class="block text-sm font-semibold text-slate-700 mb-1">2. Elenco docenti@ Attuale (Da Google)</label>
-                    <p class="text-xs text-slate-400 mb-4">Seleziona il CSV esportato dal gruppo Google</p>
-                    <input type="file" id="fileGroup" accept=".csv,.xls,.xlsx" class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer"/>
-                    <div id="statusGroup" class="text-xs font-medium text-emerald-600 mt-3 hidden">✓ File caricato e analizzato</div>
-                </div>
-            </div>
-
-            <div class="bg-slate-50 p-4 rounded-xl flex flex-col md:flex-row items-center gap-4 border border-slate-100">
-                <div class="w-full md:w-1/3">
-                    <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Email radice da escludere</label>
-                    <input type="email" id="groupEmail" value="docenti@istitutostradivari.it" class="w-full bg-white border border-slate-200 rounded-lg px-3 py-1.5 text-xs focus:outline-none font-mono text-slate-500" readonly/>
-                </div>
-                <p class="text-xs text-slate-400 leading-normal">
-                    💡 <b>Nota:</b> Il sistema esclude in automatico le email strutturali del dominio e l'indirizzo del gruppo stesso per prevenire blocchi amministrativi involontari.
-                </p>
-            </div>
-
-            <div class="text-center pt-2">
-                <button id="btnProcess" disabled class="w-full md:w-auto bg-slate-200 text-slate-400 font-semibold px-8 py-3 rounded-xl transition shadow-inner cursor-not-allowed uppercase tracking-wider text-sm">
-                    Attesa caricamento file...
-                </button>
-            </div>
-
-            <div id="dashboard" class="hidden border border-slate-200 rounded-xl overflow-hidden bg-slate-50/30">
-                <div class="bg-slate-100 px-6 py-3 border-b border-slate-200 font-semibold text-sm text-slate-700 flex justify-between items-center">
-                    <span>📊 Resoconto dell'Elaborazione Sospensioni</span>
-                    <span class="text-xs bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold">Verifica Pronta</span>
-                </div>
-                <div class="p-6 grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-                    <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-100">
-                        <div class="text-xs font-semibold text-slate-400 uppercase">Nel nuovo elenco</div>
-                        <div id="statActive" class="text-2xl font-bold text-blue-600 mt-1">0</div>
-                    </div>
-                    <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-100">
-                        <div class="text-xs font-semibold text-slate-400 uppercase">Nel vecchio gruppo</div>
-                        <div id="statGroup" class="text-2xl font-bold text-purple-600 mt-1">0</div>
-                    </div>
-                    <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-100">
-                        <div class="text-xs font-semibold text-emerald-600 uppercase font-bold">Confermati (Attivi)</div>
-                        <div id="statConfirmed" class="text-2xl font-bold text-emerald-600 mt-1">0</div>
-                    </div>
-                    <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-100 bg-red-50/50">
-                        <div class="text-xs font-semibold text-red-500 uppercase font-bold">Cessati (Sospesi)</div>
-                        <div id="statSuspended" class="text-2xl font-bold text-red-600 mt-1">0</div>
-                    </div>
-                </div>
-                <div class="px-6 py-5 bg-slate-50 border-t border-slate-200 text-center space-y-2">
-                    <button id="btnDownload" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-8 py-3 rounded-xl shadow-lg transition flex items-center gap-2 mx-auto uppercase tracking-wider text-sm">
-                        💾 Scarica CSV Pronto per Google Workspace
-                    </button>
-                    <p class="text-xs text-slate-400">Il file scaricato conterrà solo le righe degli utenti non confermati impostati su "Suspended".</p>
-                </div>
-            </div>
-
-            <hr class="border-slate-200my-8">
-
-            <div class="border border-slate-200 rounded-2xl bg-white p-6 shadow-sm space-y-6">
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <h2 class="text-xl font-bold text-slate-900">📂 Prontuario Digitale Gruppi e Classi 2025/2026</h2>
-                        <p class="text-xs text-slate-500 mt-0.5">Database ufficiale integrato per la ricerca rapida, la consultazione e l'esportazione di backup.</p>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Cosa vuoi includere nel gruppo?</label>
+                        <input type="text" id="txtParolaChiave" placeholder="Scrivi es: tutti i docenti arredo..." class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-blue-500 focus:bg-white transition shadow-inner">
+                        <p class="text-[11px] text-slate-400 mt-1">Esempi validi: <span class="font-mono text-blue-600">tutti i docenti</span>, <span class="font-mono text-blue-600">tutti i docenti liuteria</span>, <span class="font-mono text-blue-600">matematica</span>, <span class="font-mono text-blue-600">4A artistico</span></p>
                     </div>
-                    <button id="btnExportAnagrafica" class="bg-blue-800 hover:bg-blue-900 text-white text-xs font-bold px-4 py-2 rounded-lg transition shadow flex items-center gap-1.5 uppercase tracking-wide">
-                        📥 Esporta Database Completo (Excel)
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Email Gruppo Destinazione (Google Admin Console)</label>
+                        <input type="email" id="txtEmailGruppo" placeholder="es. arredo@istitutostradivari.it" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-blue-500 focus:bg-white transition shadow-inner">
+                        <p class="text-[11px] text-slate-400 mt-1">Inserisci l'indirizzo email esatto del gruppo Google che vuoi popolare/aggiornare.</p>
+                    </div>
+                </div>
+
+                <div class="text-center pt-2 border-t border-slate-100 flex flex-col sm:flex-row justify-between items-center gap-4">
+                    <span class="text-xs text-slate-400 italic">Il sistema pulisce i dati e rimuove automaticamente i docenti duplicati.</span>
+                    <button id="btnElaboraSmart" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-2.5 rounded-xl shadow transition text-sm w-full sm:w-auto">
+                        ⚙️ Elabora e Filtra Dati
+                    </button>
+                </div>
+            </div>
+
+            <div id="bloccoRisultati" class="hidden space-y-4">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-emerald-50 p-4 rounded-xl border border-emerald-100">
+                    <div>
+                        <h3 class="text-sm font-bold text-emerald-900 uppercase tracking-wide">✨ CSV Generato Con Successo!</h3>
+                        <p class="text-xs text-emerald-700">Membri unici individuati in base alla parola chiave: <span id="lblContatoreMembri" class="font-bold text-sm">0</span></p>
+                    </div>
+                    <button id="btnDownloadCsv" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-5 py-2.5 rounded-lg shadow transition text-sm flex items-center gap-2">
+                        💾 Scarica CSV per Google Workspace
                     </button>
                 </div>
 
-                <div class="relative">
-                    <input type="text" id="txtSearch" placeholder="Cerca classe, indirizzo, coordinatore, gruppo mail o dipartimento (es. Liuteria, Moda, Salvi, 1mus...)" class="w-full bg-slate-50 border border-slate-200 rounded-xl pl-4 pr-10 py-3 text-sm focus:outline-none focus:border-blue-500 focus:bg-white transition shadow-inner">
-                    <span class="absolute right-3 top-3.5 text-slate-400 text-sm">🔍</span>
-                </div>
-
-                <div class="overflow-x-auto border border-slate-100 rounded-xl">
-                    <table class="w-full text-left border-collapse text-xs">
-                        <thead>
-                            <tr class="bg-slate-100 border-b border-slate-200 text-slate-700 uppercase tracking-wider font-semibold">
-                                <th class="p-3">Ambito / Classe / Macro-Gruppo</th>
-                                <th class="p-3">Email Gruppo / Riferimento</th>
-                                <th class="p-3">Email Consiglio di Classe (CdC)</th>
-                                <th class="p-3">Responsabile / Coordinatore</th>
-                                <th class="p-3">Stanza Riunione / Meet</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tableAnagraficaBody" class="divide-y divide-slate-100 text-slate-600">
-                            </tbody>
-                    </table>
+                <div class="border border-slate-200 rounded-2xl bg-white p-6 shadow-sm">
+                    <h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">Membri rilevati pronti per l'importazione:</h4>
+                    <div class="overflow-x-auto max-h-60 overflow-y-auto">
+                        <table class="w-full text-left border-collapse text-xs font-mono">
+                            <thead>
+                                <tr class="bg-slate-50 border-b border-slate-200 text-slate-600 sticky top-0">
+                                    <th class="p-2.5">Elemento / Riferimento Excel</th>
+                                    <th class="p-2.5">Docente Estratto</th>
+                                    <th class="p-2.5">Email Generata / Associata</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tablePreviewBody" class="divide-y divide-slate-100 text-slate-700">
+                                </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
@@ -163,124 +94,11 @@
     </div>
 
     <script>
-        // --- DATABASE INTERNO INTEGRATO ---
-        const DATABASE_ISTITUTO = [
-            // Macro-gruppi e utility istituzionali
-            { tipo: "Macro-Gruppo", nome: "Tutti i docenti", mail: "docenti@istitutostradivari.it", cdc: "-", coord: "Dirigenza", meet: "https://meet.google.com/umf-boww-cuv" },
-            { tipo: "Macro-Gruppo", nome: "Docenti Moda", mail: "moda@istitutostradivari.it", cdc: "-", coord: "-", meet: "-" },
-            { tipo: "Macro-Gruppo", nome: "Docenti Liuteria", mail: "liuteria@istitutostradivari.it", cdc: "-", coord: "-", meet: "-" },
-            { tipo: "Macro-Gruppo", nome: "Docenti Artistico", mail: "artistico@istitutostradivari.it", cdc: "-", coord: "-", meet: "-" },
-            { tipo: "Macro-Gruppo", nome: "Docenti Musicale", mail: "musicale@istitutostradivari.it", cdc: "-", coord: "-", meet: "-" },
-            { tipo: "Macro-Gruppo", nome: "Docenti Arredo", mail: "arredo@istitutostradivari.it", cdc: "-", coord: "-", meet: "-" },
-            { tipo: "Macro-Gruppo", nome: "Coordinatori di classe", mail: "coordinatoridiclasse@istitutostradivari.it", cdc: "-", coord: "-", meet: "-" },
-            { tipo: "Macro-Gruppo", nome: "Amministratori google", mail: "webmaster@istitutostradivari.it", cdc: "-", coord: "-", meet: "-" },
-            { tipo: "Macro-Gruppo", nome: "Docenti di sostegno", mail: "sostegno@istitutostradivari.it", cdc: "-", coord: "-", meet: "-" },
-            { tipo: "Macro-Gruppo", nome: "Docenti di strumento", mail: "strumento@istitutostradivari.it", cdc: "-", coord: "-", meet: "-" },
-            { tipo: "Macro-Gruppo", nome: "Assistenti amministrativi", mail: "assistentiamministrativi@istitutostradivari.it", cdc: "-", coord: "-", meet: "-" },
-            { tipo: "Macro-Gruppo", nome: "Assistenti tecnici", mail: "assistentitecnici@istitutostradivari.it", cdc: "-", coord: "-", meet: "-" },
-            { tipo: "Macro-Gruppo", nome: "SAAP (Assistenti persona)", mail: "assistenti.persona@istitutostradivari.it", cdc: "-", coord: "-", meet: "-" },
-            { tipo: "Macro-Gruppo", nome: "RSU (Rappresentanza Sindacale Unitaria)", mail: "-", cdc: "-", coord: "-", meet: "-" },
-            { tipo: "Macro-Gruppo", nome: "Rappresentanti di istituto", mail: "rappresentanti.studenti@istitutostradivari.it", cdc: "-", coord: "-", meet: "-" },
+        let DATI_SCUOLA = [];
+        let csvRisultatoGoogle = "";
 
-            // Dipartimenti
-            { tipo: "Dipartimento", nome: "Discipline Matematiche e Scientifiche (Mat, Fis, Chi, Bio, Motorie)", mail: "-", cdc: "-", coord: "OTTINI", meet: "https://meet.google.com/qrc-surq-qwj" },
-            { tipo: "Dipartimento", nome: "Discipline Umanistiche (Ita, Sto, Arte, Ing, Dir, Filo, IRC)", mail: "-", cdc: "-", coord: "MORANDO", meet: "https://meet.google.com/sas-iwpo-yxc" },
-            { tipo: "Dipartimento", nome: "Discipline musicali - Liceo Musicale (TAC, Tec, Storia Mus, Esecuzione, Lab)", mail: "-", cdc: "-", coord: "ROGNA", meet: "https://meet.google.com/pup-rqfg-gqh" },
-            { tipo: "Dipartimento", nome: "Discipline Tecnico Professionali - Moda", mail: "-", cdc: "-", coord: "VISIOLI", meet: "https://meet.google.com/sza-zxvn-ndd" },
-            { tipo: "Dipartimento", nome: "Discipline Tecnico Professionali - Arredo", mail: "-", cdc: "-", coord: "SALVI", meet: "https://meet.google.com/rwp-yikp-hew" },
-            { tipo: "Dipartimento", nome: "Discipline di indirizzo Liceo Artistico (Pitt, Geom, Plast, Scenog)", mail: "-", cdc: "-", coord: "ARDIGÒ", meet: "https://meet.google.com/ywf-jqvs-ywo" },
-            { tipo: "Dipartimento", nome: "Discipline Tecnico Professionali - Liuteria (Lab, Strumento, Acustica, Disegno)", mail: "-", cdc: "-", coord: "SPERZAGA", meet: "https://meet.google.com/pod-kkoo-vnn" },
-            { tipo: "Dipartimento", nome: "Dipartimento per le disabilità", mail: "-", cdc: "-", coord: "SERFOGLI", meet: "http://meet.google.com/nop-cdmh-aus" },
-
-            // Classi Canoniche
-            { tipo: "Classe", nome: "1 Liceo Musicale", mail: "1mus2025@istitutostradivari.it", cdc: "docenti.1mus2025@istitutostradivari.it", coord: "Ciccone", meet: "https://meet.google.com/gkq-rruy-zhh" },
-            { tipo: "Classe", nome: "2 Liceo Musicale", mail: "1mus2024@istitutostradivari.it", cdc: "docenti.1mus2024@istitutostradivari.it", coord: "Lana", meet: "https://meet.google.com/bew-hfjg-zqq" },
-            { tipo: "Classe", nome: "3 Liceo Musicale", mail: "1mus2023@istitutostradivari.it", cdc: "docenti.1mus2023@istitutostradivari.it", coord: "Baffa", meet: "https://meet.google.com/urt-rfsc-qpn" },
-            { tipo: "Classe", nome: "4 Liceo musicale", mail: "1mus2022@istitutostradivari.it", cdc: "docenti.1mus2022@istitutostradivari.it", coord: "Sciò", meet: "https://meet.google.com/xyv-rhss-tat" },
-            { tipo: "Classe", nome: "5 Liceo Musicale", mail: "1mus2021@istitutostradivari.it", cdc: "docenti.1mus2021@istitutostradivari.it", coord: "Morando", meet: "https://meet.google.com/eri-tigy-shr" },
-            { tipo: "Classe", nome: "1 Liuteria", mail: "1aliut2025@istitutostradivari.it", cdc: "docenti.1liut2025@istitutostradivari.it", coord: "Spinello", meet: "https://meet.google.com/ohw-xrnc-idi" },
-            { tipo: "Classe", nome: "2 Liuteria", mail: "1liut2024@istitutostradivari.it", cdc: "docenti.1liut2024@istitutostradivari.it", coord: "Zaccaria", meet: "https://meet.google.com/qqr-nczq-csd" },
-            { tipo: "Classe", nome: "3 A Liuteria", mail: "1aliut2023@istitutostradivari.it", cdc: "docenti.1aliut2023@istitutostradivari.it", coord: "Bardella", meet: "https://meet.google.com/wow-ebrm-nrz" },
-            { tipo: "Classe", nome: "3 B Liuteria", mail: "1bliut2023@istitutostradivari.it", cdc: "docenti.1bliut2023@istitutostradivari.it", coord: "Renzi", meet: "https://meet.google.com/pua-zyjm-ykm" },
-            { tipo: "Classe", nome: "4 A Liuteria", mail: "1aliut2022@istitutostradivari.it", cdc: "docenti.1aliut2022@istitutostradivari.it", coord: "Chittò", meet: "https://meet.google.com/mzv-xhwv-kdz" },
-            { tipo: "Classe", nome: "4 B Liuteria", mail: "1bliut2022@istitutostradivari.it", cdc: "docenti.1bliut2022@istitutostradivari.it", coord: "Campagnolo", meet: "https://meet.google.com/fon-nhco-och" },
-            { tipo: "Classe", nome: "5 A Liuteria", mail: "1aliut2021@istitutostradivari.it", cdc: "docenti.1aliut2021@istitutostradivari.it", coord: "Cagiano", meet: "https://meet.google.com/wjg-mnab-rzp" },
-            { tipo: "Classe", nome: "5 B Liuteria", mail: "1bliut2021@istitutostradivari.it", cdc: "docenti.1bliut2021@istitutostradivari.it", coord: "Fracassi", meet: "https://meet.google.com/xky-cxar-cos" },
-            { tipo: "Classe", nome: "1 A Moda Arredo", mail: "1amodarr2025@istitutostradivari.it", cdc: "docenti.1amodaarr2025@istitutostradivari.it", coord: "Nolli", meet: "https://meet.google.com/zzv-niqe-zwr" },
-            { tipo: "Classe", nome: "1 B Moda", mail: "1bmoda2025@istitutostradivari.it", cdc: "docenti.1bmoda2025@istitutostradivari.it", coord: "Nuzzo", meet: "https://meet.google.com/cgp-qcxt-kgn" },
-            { tipo: "Classe", nome: "1 C Moda", mail: "1cmoda2025@istitutostradivari.it", cdc: "docenti.1cmoda2025@istitutostradivari.it", coord: "Lacava", meet: "https://meet.google.com/gdk-yuwb-nvk" },
-            { tipo: "Classe", nome: "2 A Arredo", mail: "1aarr2024@istitutostradivari.it", cdc: "docenti.1aarr2024@istitutostradivari.it", coord: "Parente", meet: "https://meet.google.com/pqw-qiti-szh" },
-            { tipo: "Classe", nome: "2 B Moda", mail: "1bmoda2024@istitutostradivari.it", cdc: "docenti.1bmoda2024@istitutostradivari.it", coord: "Crimi", meet: "https://meet.google.com/vmi-jgcs-mrf" },
-            { tipo: "Classe", nome: "2 C Moda", mail: "1cmoda2024@istitutostradivari.it", cdc: "docenti.1cmoda2024@istitutostradivari.it", coord: "Parrella M", meet: "https://meet.google.com/zou-hrvd-hre" },
-            { tipo: "Classe", nome: "3 A Arredo", mail: "1aarr2023@istitutostradivari.it", cdc: "docenti.1aarr2023@istitutostradivari.it", coord: "Salvi", meet: "https://meet.google.com/fcz-gkir-gbk" },
-            { tipo: "Classe", nome: "3 B Moda", mail: "1bmoda2023@istitutostradivari.it", cdc: "docenti.1bmoda2023@istitutostradivari.it", coord: "Aldovini", meet: "https://meet.google.com/osd-mvvz-ehn" },
-            { tipo: "Classe", nome: "3 C Moda", mail: "1cmoda2023@istitutostradivari.it", cdc: "docenti.1cmoda2023@istitutostradivari.it", coord: "Visioli", meet: "https://meet.google.com/zkn-tppt-msa" },
-            { tipo: "Classe", nome: "4 A Arredo", mail: "1aarr2022@istitutostradivari.it", cdc: "docenti.1aarr2022@istitutostradivari.it", coord: "Ghidetti", meet: "https://meet.google.com/caj-jbfv-vzi" },
-            { tipo: "Classe", nome: "4 B Moda", mail: "1bmoda2022@istitutostradivari.it", cdc: "docenti.1bmoda2022@istitutostradivari.it", coord: "Parrella D", meet: "https://meet.google.com/tqe-ppsh-uam" },
-            { tipo: "Classe", nome: "4 C Moda", mail: "1cmoda2022@istitutostradivari.it", cdc: "docenti.1cmoda2022@istitutostradivari.it", coord: "Spadari", meet: "https://meet.google.com/kfw-yaqd-eia" },
-            { tipo: "Classe", nome: "5 A Moda/arredo", mail: "1amodarr2021@istitutostradivari.it", cdc: "docenti.1amodarredo2021@istitutostradivari.it", coord: "Fanciullo", meet: "https://meet.google.com/mvf-qhwh-erb" },
-            { tipo: "Classe", nome: "5 B Moda", mail: "1bmoda2021@istitutostradivari.it", cdc: "docenti.1bmoda2021@istitutostradivari.it", coord: "Soldi", meet: "https://meet.google.com/agz-xqov-vwo" },
-            { tipo: "Classe", nome: "1A Liceo Artistico", mail: "1aart2025@istitutostradivari.it", cdc: "docenti.1aart2025@istitutostradivari.it", coord: "Maranesi", meet: "https://meet.google.com/drn-jgck-kmo" },
-            { tipo: "Classe", nome: "1B Liceo Artistico", mail: "1bart2025@istitutostradivari.it", cdc: "docenti.1bart2025@istitutostradivari.it", coord: "Formica", meet: "https://meet.google.com/eud-vwxk-njb" },
-            { tipo: "Classe", nome: "1C Liceo Artistico", mail: "1cart2025@istitutostradivari.it", cdc: "docenti.1cart2025@istitutostradivari.it", coord: "Mazzolari", meet: "https://meet.google.com/wnk-npku-gue" },
-            { tipo: "Classe", nome: "1D Liceo Artistico", mail: "1dart2025@istitutostradivari.it", cdc: "docenti.1dart2025@istitutostradivari.it", coord: "Pareti", meet: "https://meet.google.com/xpf-yuua-dzc" },
-            { tipo: "Classe", nome: "2A Liceo Artistico", mail: "1aart2024@istitutostradivari.it", cdc: "docenti.1aart2024@istitutostradivari.it", coord: "Leggieri", meet: "https://meet.google.com/wgf-ijwi-dpj" },
-            { tipo: "Classe", nome: "2B Liceo Artistico", mail: "1bart2024@istitutostradivari.it", cdc: "docenti.1bart2024@istitutostradivari.it", coord: "Rigoli", meet: "https://meet.google.com/czi-nxgg-mhu" },
-            { tipo: "Classe", nome: "2C Liceo Artistico", mail: "1cart2024@istitutostradivari.it", cdc: "docenti.1cart2024@istitutostradivari.it", coord: "Pennisi", meet: "https://meet.google.com/cbr-oeia-czg" },
-            { tipo: "Classe", nome: "2D Liceo Artistico", mail: "1dart2024@istitutostradivari.it", cdc: "docenti.1dart2024@istitutostradivari.it", coord: "Guareschi", meet: "https://meet.google.com/qmr-sdxi-wom" },
-            { tipo: "Classe", nome: "3A Liceo Artistico", mail: "1aart2023@istitutostradivari.it", cdc: "docenti.1aart2023@istitutostradivari.it", coord: "Casali", meet: "https://meet.google.com/hmk-dnno-mqh" },
-            { tipo: "Classe", nome: "3B Liceo Artistico", mail: "1bart2023@istitutostradivari.it", cdc: "docenti.1bart2023@istitutostradivari.it", coord: "Gamba", meet: "https://meet.google.com/jvc-ebjf-fth" },
-            { tipo: "Classe", nome: "3C Liceo Artistico", mail: "1cart2023@istitutostradivari.it", cdc: "docenti.1cart2023@istitutostradivari.it", coord: "Rossetti", meet: "https://meet.google.com/apb-hrgr-ydm" },
-            { tipo: "Classe", nome: "3D Liceo Artistico", mail: "1dart2023@istitutostradivari.it", cdc: "docenti.1dart2023@istitutostradivari.it", coord: "Oneta", meet: "https://meet.google.com/jnb-eajq-hzz" },
-            { tipo: "Classe", nome: "4A Liceo Artistico", mail: "1aart2022@istitutostradivari.it", cdc: "docenti.1aart2022@istitutostradivari.it", coord: "Fornabaio", meet: "https://meet.google.com/xkm-nnes-hxo" },
-            { tipo: "Classe", nome: "4B Liceo Artistico", mail: "1bart2022@istitutostradivari.it", cdc: "docenti.1bart2022@istitutostradivari.it", coord: "Ardigò", meet: "https://meet.google.com/end-kkei-igc" },
-            { tipo: "Classe", nome: "4C Liceo Artistico", mail: "1cart2022@istitutostradivari.it", cdc: "docenti.1cart2022@istitutostradivari.it", coord: "Zambelli", meet: "https://meet.google.com/aqi-gyvn-fhj" },
-            { tipo: "Classe", nome: "5A Liceo Artistico", mail: "1aart2021@istitutostradivari.it", cdc: "docenti.1aart2021@istitutostradivari.it", coord: "Simonini", meet: "https://meet.google.com/mbs-ckqw-nbj" },
-            { tipo: "Classe", nome: "5B Liceo Artistico", mail: "1bart2021@istitutostradivari.it", cdc: "docenti.1bart2021@istitutostradivari.it", coord: "Rossetti", meet: "https://meet.google.com/vgr-dror-vjg" },
-            { tipo: "Classe", nome: "5C Liceo Artistico", mail: "1cart2021@istitutostradivari.it", cdc: "docenti.1cart2021@istitutostradivari.it", coord: "Bozzetti", meet: "https://meet.google.com/prz-ptsq-vzm" }
-        ];
-
-        // --- AUTOMAZIONE PASSAGGIO D'ANNO (LOGICA CONFRONTO) ---
-        let dataActiveTeachers = new Set();
-        let dataGroupMembers = new Set();
-        let finalCsvString = "";
-
-        function extractEmailFromRow(row, ignoreEmail) {
-            const emailRegex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g;
-            ignoreEmail = ignoreEmail.toLowerCase().trim();
-            
-            for (let key in row) {
-                if (row.hasOwnProperty(key)) {
-                    const valueStr = String(row[key]).trim();
-                    const matches = valueStr.match(emailRegex);
-                    if (matches) {
-                        for (let m of matches) {
-                            let emailClean = m.toLowerCase().trim();
-                            // Filtro precauzionale per evitare di includere l'etichetta del gruppo o email fittizie
-                            if (emailClean !== ignoreEmail && !emailClean.startsWith("docenti.") && emailClean !== "docenti@istitutostradivari.it") {
-                                return emailClean;
-                            }
-                        }
-                    }
-                }
-            }
-            return null;
-        }
-
-        function checkInputsReady() {
-            const btn = document.getElementById('btnProcess');
-            if (dataActiveTeachers.size > 0 && dataGroupMembers.size > 0) {
-                btn.removeAttribute('disabled');
-                btn.innerText = "Elabora e Confronta Danti";
-                btn.className = "w-full md:w-auto bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-3 rounded-xl transition shadow-md cursor-pointer uppercase tracking-wider text-sm animate-pulse";
-            } else {
-                btn.setAttribute('disabled', 'true');
-                btn.innerText = "Attesa caricamento file...";
-                btn.className = "w-full md:w-auto bg-slate-200 text-slate-400 font-semibold px-8 py-3 rounded-xl transition shadow-inner cursor-not-allowed uppercase tracking-wider text-sm";
-            }
-        }
-
-        document.getElementById('fileActive').addEventListener('change', function(e) {
+        // Caricamento e decodifica dell'Excel scolastico
+        document.getElementById('fileScuola').addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (!file) return;
             const reader = new FileReader();
@@ -288,159 +106,156 @@
                 try {
                     const data = evt.target.result;
                     const workbook = XLSX.read(data, { type: 'binary' });
-                    const rows = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]]);
-                    dataActiveTeachers.clear();
-                    const ignore = document.getElementById('groupEmail').value;
-                    rows.forEach(r => {
-                        const email = extractEmailFromRow(r, ignore);
-                        if (email) dataActiveTeachers.add(email);
-                    });
-                    document.getElementById('statusActive').classList.remove('hidden');
-                    checkInputsReady();
-                } catch (err) { alert("Errore lettura File 1: " + err.message); }
-            };
-            reader.readAsBinaryString(file);
-        });
-
-        document.getElementById('fileGroup').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(evt) {
-                try {
-                    const data = evt.target.result;
-                    const workbook = XLSX.read(data, { type: 'binary' });
-                    const rows = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]]);
-                    dataGroupMembers.clear();
-                    const ignore = document.getElementById('groupEmail').value;
-                    rows.forEach(r => {
-                        const email = extractEmailFromRow(r, ignore);
-                        if (email) dataGroupMembers.add(email);
-                    });
-                    document.getElementById('statusGroup').classList.remove('hidden');
-                    checkInputsReady();
-                } catch (err) { alert("Errore lettura File 2: " + err.message); }
-            };
-            reader.readAsBinaryString(file);
-        });
-
-        document.getElementById('btnProcess').addEventListener('click', function() {
-            let confirmedCount = 0;
-            let suspendedCount = 0;
-            
-            let csvRows = ["First Name [Required],Last Name [Required],Email Address [Required],Password [Required],Org Unit Path [Required],Status [Optional]"];
-            
-            dataGroupMembers.forEach(email => {
-                if (dataActiveTeachers.has(email)) {
-                    confirmedCount++;
-                } else {
-                    suspendedCount++;
-                    csvRows.push(`,,${email},,,Suspended`);
+                    // Converte il primo foglio in JSON grezzo
+                    DATI_SCUOLA = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]]);
+                    
+                    document.getElementById('statusUpload').classList.remove('hidden');
+                    document.getElementById('bloccoConfigurazione').classList.remove('opacity-40', 'pointer-events-none');
+                } catch (err) { 
+                    alert("Errore durante l'apertura del file. Verifica sia un formato Excel corretto."); 
                 }
-            });
+            };
+            reader.readAsBinaryString(file);
+        });
 
-            finalCsvString = csvRows.join("\n");
-
-            document.getElementById('statActive').innerText = dataActiveTeachers.size;
-            document.getElementById('statGroup').innerText = dataGroupMembers.size;
-            document.getElementById('statConfirmed').innerText = confirmedCount;
-            document.getElementById('statSuspended').innerText = suspendedCount;
+        // Automatizza il suggerimento dell'email del gruppo durante la digitazione
+        document.getElementById('txtParolaChiave').addEventListener('input', function() {
+            const query = this.value.toLowerCase().trim();
+            const txtEmail = document.getElementById('txtEmailGruppo');
             
-            document.getElementById('dashboard').classList.remove('hidden');
-            document.getElementById('dashboard').scrollIntoView({ behavior: 'smooth' });
+            if (query === "tutti i docenti") {
+                txtEmail.value = "docenti@istitutostradivari.it";
+            } else if (query.includes("arredo")) {
+                txtEmail.value = "arredo@istitutostradivari.it";
+            } else if (query.includes("moda")) {
+                txtEmail.value = "moda@istitutostradivari.it";
+            } else if (query.includes("liuteria")) {
+                txtEmail.value = "liuteria@istitutostradivari.it";
+            } else if (query.includes("artistico") || query.includes("art")) {
+                txtEmail.value = "artistico@istitutostradivari.it";
+            } else if (query.includes("musicale") || query.includes("mus")) {
+                txtEmail.value = "musicale@istitutostradivari.it";
+            }
         });
 
-        document.getElementById('btnDownload').addEventListener('click', function() {
-            if (!finalCsvString) return;
-            const blob = new Blob([finalCsvString], { type: 'text/csv;charset=utf-8;' });
-            const link = document.createElement("a");
-            link.setAttribute("href", URL.createObjectURL(blob));
-            link.setAttribute("download", "Sospensioni_Docenti_Workspace.csv");
-            link.style.visibility = 'hidden';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        });
+        // MOTORE DI INTERPRETAZIONE DELLE PAROLE CHIAVE
+        document.getElementById('btnElaboraSmart').addEventListener('click', function() {
+            if (DATI_SCUOLA.length === 0) return;
 
+            const queryLibera = document.getElementById('txtParolaChiave').value.toLowerCase().trim();
+            const emailGruppoTarget = document.getElementById('txtEmailGruppo').value.trim();
 
-        // --- LOGICA DEL PRONTUARIO DELLE ANAGRAFICHE ---
-        const tableBody = document.getElementById('tableAnagraficaBody');
-        const searchInput = document.getElementById('txtSearch');
-
-        function renderTable(filterText = "") {
-            tableBody.innerHTML = "";
-            const searchLower = filterText.toLowerCase().trim();
-
-            const filtered = DATABASE_ISTITUTO.filter(item => {
-                return item.nome.toLowerCase().includes(searchLower) ||
-                       item.mail.toLowerCase().includes(searchLower) ||
-                       item.cdc.toLowerCase().includes(searchLower) ||
-                       item.coord.toLowerCase().includes(searchLower) ||
-                       item.tipo.toLowerCase().includes(searchLower);
-            });
-
-            if (filtered.length === 0) {
-                tableBody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-slate-400 italic">Nessun gruppo o classe corrispondente ai criteri di ricerca.</td></tr>`;
+            if (!queryLibera) {
+                alert("Per favore, inserisci una parola chiave o una frase di ricerca (es: tutti i docenti arredo).");
+                return;
+            }
+            if (!emailGruppoTarget) {
+                alert("Per favore, imposta l'email del gruppo Google a cui assegnare i docenti.");
                 return;
             }
 
-            filtered.forEach(item => {
-                const tr = document.createElement('tr');
-                tr.className = "hover:bg-slate-50/80 transition";
-                
-                let tagTipoColor = "bg-slate-100 text-slate-700";
-                if(item.tipo === "Macro-Gruppo") tagTipoColor = "bg-purple-100 text-purple-800 font-semibold";
-                if(item.tipo === "Dipartimento") tagTipoColor = "bg-amber-100 text-amber-800 font-semibold";
+            const tableBody = document.getElementById('tablePreviewBody');
+            tableBody.innerHTML = "";
 
-                const mailLink = item.mail !== "-" ? `<a href="mailto:${item.mail}" class="text-blue-600 hover:underline font-mono">${item.mail}</a>` : `<span class="text-slate-300">-</span>`;
-                const cdcLink = item.cdc !== "-" ? `<a href="mailto:${item.cdc}" class="text-blue-600 hover:underline font-mono">${item.cdc}</a>` : `<span class="text-slate-300">-</span>`;
+            // Intestazioni formali richieste dalla console amministratore di Google
+            let righeCsv = ["Group Email,Member Email,Member Role,Member Type"];
+            let docentiAggiuntiSet = new Set();
+            let contatoreMembri = 0;
+
+            DATI_SCUOLA.forEach(riga => {
+                // Raccoglie in un'unica stringa tutti i dati descrittivi della riga Excel per facilitare il matching
+                const classeInfo = String(riga["Classe"] || riga["Nome Elemento"] || riga["Ambito"] || "").toLowerCase();
+                const dipartimentoInfo = String(riga["DIPARTIMENTO"] || riga["Tipologia"] || "").toLowerCase();
                 
-                let meetLink = `<span class="text-slate-300">-</span>`;
-                if (item.meet !== "-") {
-                    const cleanMeet = item.meet.replace("https://", "").replace("http://", "");
-                    meetLink = `<a href="${item.meet}" target="_blank" class="text-emerald-600 hover:underline font-medium inline-flex items-center gap-1">📹 ${cleanMeet}</a>`;
+                // Individua il nome del docente
+                const docente = riga["Coordinatore"] || riga["Coordinatore / Responsabile"] || riga["COORD."] || riga["Responsabile"];
+                
+                if (!docente || docente === "-" || String(docente).trim() === "") return;
+
+                let inserisciRiga = false;
+
+                // Logica di instradamento intelligente basata sulla frase digitata
+                if (queryLibera === "tutti i docenti") {
+                    // Criterio globale: include qualunque riga contenga un docente valido
+                    inserisciRiga = true;
+                } else if (queryLibera.startsWith("tutti i docenti ")) {
+                    // Criterio di sotto-indirizzo (es: "tutti i docenti arredo")
+                    const sottoFiltro = queryLibera.replace("tutti i docenti ", "").trim();
+                    if (classeInfo.includes(sottoFiltro) || dipartimentoInfo.includes(sottoFiltro)) {
+                        inserisciRiga = true;
+                    }
+                } else if (queryLibera.startsWith("tutti i docenti di ")) {
+                    // Criterio di materia/disciplina (es: "tutti i docenti di matematica")
+                    const sottoFiltroMateria = queryLibera.replace("tutti i docenti di ", "").trim();
+                    if (dipartimentoInfo.includes(sottoFiltroMateria) || classeInfo.includes(sottoFiltroMateria)) {
+                        inserisciRiga = true;
+                    }
+                } else {
+                    // Criterio di fallback per corrispondenza generica o singola classe (es: "1 liceo musicale" o "matematica")
+                    if (classeInfo.includes(queryLibera) || dipartimentoInfo.includes(queryLibera)) {
+                        inserisciRiga = true;
+                    }
                 }
 
-                tr.innerHTML = `
-                    <td class="p-3">
-                        <div class="font-bold text-slate-800">${item.nome}</div>
-                        <span class="text-[10px] px-2 py-0.5 rounded-full ${tagTipoColor} mt-1 inline-block">${item.tipo}</span>
-                    </td>
-                    <td class="p-3">${mailLink}</td>
-                    <td class="p-3">${cdcLink}</td>
-                    <td class="p-3 font-medium text-slate-700">${item.coord}</td>
-                    <td class="p-3">${meetLink}</td>
-                `;
-                tableBody.appendChild(tr);
+                // Se la riga corrisponde alla parola chiave, estraiamo l'email del docente
+                if (inserisciRiga) {
+                    let emailDocente = "";
+                    
+                    if (riga["Email Docente"] || riga["Email"]) {
+                        emailDocente = String(riga["Email Docente"] || riga["Email"]).trim().toLowerCase();
+                    } else {
+                        // Fallback: se nell'Excel non c'è la colonna email, la ricava dal primo termine (cognome)
+                        let cognomeMondato = String(docente).split(" ")[0].replace(/[^a-zA-Z]/g, "").toLowerCase();
+                        emailDocente = `${cognomeMondato}@istitutostradivari.it`;
+                    }
+
+                    // Impedisce la generazione di duplicati all'interno dello stesso file CSV
+                    if (!docentiAggiuntiSet.has(emailDocente)) {
+                        docentiAggiuntiSet.add(emailDocente);
+
+                        // Formattazione riga standard per caricamento massivo Google Workspace
+                        righeCsv.push(`${emailGruppoTarget},${emailDocente},MEMBER,USER`);
+
+                        // Aggiorna l'anteprima visiva a schermo
+                        const rigaTabella = document.createElement('tr');
+                        rigaTabella.className = "hover:bg-slate-50 transition";
+                        rigaTabella.innerHTML = `
+                            <td class="p-2 border-b border-slate-100">${riga["Classe"] || riga["DIPARTIMENTO"] || "Dato Generale"}</td>
+                            <td class="p-2 border-b border-slate-100 font-bold text-slate-900">${docente}</td>
+                            <td class="p-2 border-b border-slate-100 text-blue-600">${emailDocente}</td>
+                        `;
+                        tableBody.appendChild(rigaTabella);
+                        contatoreMembri++;
+                    }
+                }
             });
-        }
 
-        searchInput.addEventListener('input', (e) => renderTable(e.target.value));
-        
-        // Esportazione del prontuario interno in un vero file Excel (.xlsx) per backup
-        document.getElementById('btnExportAnagrafica').addEventListener('click', function() {
-            const worksheetData = DATABASE_ISTITUTO.map(item => ({
-                "Tipologia": item.tipo,
-                "Nome Elemento": item.nome,
-                "Email Gruppo": item.mail,
-                "Email CdC (Consiglio)": item.cdc,
-                "Coordinatore / Responsabile": item.coord,
-                "Link Google Meet": item.meet
-            }));
-            
-            const ws = XLSX.utils.json_to_sheet(worksheetData);
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, "Anagrafica Gruppi 2025-2026");
-            
-            // Auto-fit delle colonne per rendere l'excel leggibile subito
-            const maxW = [{wch:15}, {wch:40}, {wch:35}, {wch:35}, {wch:25}, {wch:40}];
-            ws['!cols'] = maxW;
+            if (contatoreMembri === 0) {
+                alert("Nessun docente corrisponde alla parola chiave inserita. Controlla l'ortografia o i testi nell'Excel.");
+                return;
+            }
 
-            XLSX.writeFile(wb, "Istituto_Stradivari_Anagrafica_Gruppi_2025_2026.xlsx");
+            // Compila la stringa CSV finale
+            csvRisultatoGoogle = righeCsv.join("\r\n");
+            
+            // Mostra i risultati a schermo
+            document.getElementById('lblContatoreMembri').innerText = contatoreMembri;
+            document.getElementById('bloccoRisultati').classList.remove('hidden');
+            
+            alert(`Interpretazione completata! Estratti ${contatoreMembri} docenti unici per il gruppo.`);
         });
 
-        // Inizializzazione Tabella
-        renderTable();
+        // Scarica il file CSV definitivo
+        document.getElementById('btnDownloadCsv').addEventListener('click', function() {
+            if (!csvRisultatoGoogle) return;
+            const blob = new Blob([csvRisultatoGoogle], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            
+            const nomeFilePulito = document.getElementById('txtEmailGruppo').value.split('@')[0];
+            link.download = `Membri_Gruppo_${nomeFilePulito}_Workspace.csv`;
+            link.click();
+        });
     </script>
 </body>
 </html>
