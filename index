@@ -3,104 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Istituto Stradivari - Gestione Passaggio d'Anno Docenti</title>
-    <!-- Tailwind CSS per una grafica moderna e pulita -->
+    <title>Istituto Stradivari - Gestione Passaggio d'Anno</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Libreria SheetJS per leggere i file Excel direttamente nel browser -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body class="bg-slate-50 font-sans text-slate-800 min-h-screen py-10 px-4">
 
-    <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden">
+    <div class="max-w-5xl mx-auto bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden">
         
         <!-- Header -->
         <div class="bg-gradient-to-r py-6 px-8 text-white flex items-center justify-between" style="background-image: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);">
             <div>
                 <h1 class="text-2xl font-bold tracking-tight">Istituto Stradivari</h1>
-                <p class="text-blue-100 text-sm mt-1">Automazione Aggiornamento Account Docenti</p>
+                <p class="text-blue-100 text-sm mt-1">Pannello di Automazione Account e Gruppi</p>
             </div>
-            <span class="bg-blue-500/30 text-white text-xs px-3 py-1.5 rounded-full font-medium uppercase tracking-wider border border-white/20">A prova di errore</span>
+            <span class="bg-emerald-500 text-white text-xs px-3 py-1.5 rounded-full font-semibold uppercase tracking-wider shadow-sm">🔒 Conforme GDPR (Elaborazione Locale)</span>
         </div>
 
         <div class="p-8 space-y-8">
             
-            <!-- Istruzioni rapide integrate -->
-            <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-xl">
-                <h3 class="text-amber-800 font-semibold flex items-center gap-2">
-                    ℹ️ Come procedere senza sbagliare:
-                </h3>
-                <ul class="text-amber-700 text-sm mt-2 list-disc pl-5 space-y-1">
-                    <li>Nel <b>Riquadro 1</b> carica l'Excel dei docenti attivi del prossimo anno.</li>
-                    <li>Nel <b>Riquadro 2</b> carica il CSV dei membri attuali esportato da Google Gruppi.</li>
-                    <li>Il sistema confronterà le email: chi è nel gruppo attuale ma <b>NON</b> nel nuovo elenco verrà contrassegnato come <b>Sospeso</b> nel file finale.</li>
-                </ul>
+            <!-- GUIDA OPERATIVA INTEGRATA -->
+            <div class="bg-blue-50/60 border border-blue-100 rounded-xl p-6">
+                <h2 class="text-blue-900 font-bold text-lg mb-4 flex items-center gap-2">
+                    📖 Guida Operativa per i Collaboratori (Passo dopo Passo)
+                </h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm text-slate-600">
+                    <div class="space-y-2">
+                        <div class="flex items-center gap-2 font-bold text-blue-800">
+                            <span class="bg-blue-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs">1</span>
+                            Estrai i Dati da Google
+                        </div>
+                        <p class="pl-8 leading-relaxed">
+                            Accedi alla Console Google Workspace. Vai su <b>Directory > Gruppi</b>, seleziona <code class="bg-blue-100/80 px-1 rounded text-blue-900 font-mono text-xs">docenti@istitutostradivari.it</code> e clicca su <b>"Esporta membri"</b> in alto a destra. Scarica il file CSV.
+                        </p>
+                    </div>
+
+                    <div class="space-y-2">
+                        <div class="flex items-center gap-2 font-bold text-blue-800">
+                            <span class="bg-blue-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs">2</span>
+                            Carica ed Elabora Qui
+                        </div>
+                        <p class="pl-8 leading-relaxed">
+                            Inserisci nei due riquadri sottostanti l'Excel dei <b>nuovi docenti attivi</b> fornito dalla segreteria e il file dei <b>membri attuali</b> appena scaricato da Google. Clicca sul pulsante blu di elaborazione.
+                        </p>
+                    </div>
+
+                    <div class="space-y-2">
+                        <div class="flex items-center gap-2 font-bold text-blue-800">
+                            <span class="bg-blue-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs">3</span>
+                            Applica le Modifiche
+                        </div>
+                        <p class="pl-8 leading-relaxed">
+                            Controlla il resoconto numerico. Scarica il nuovo CSV generato, vai su Google Workspace in <b>Directory > Utenti</b>, clicca su <b>"Aggiornamento massivo utenti"</b> e carica il file. I docenti non confermati verranno sospesi in automatico.
+                        </p>
+                    </div>
+                </div>
             </div>
 
-            <!-- Form di Configurazione -->
+            <hr class="border-slate-100">
+
+            <!-- ZONA CARICAMENTO FILE -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 
                 <!-- Input 1: Nuovi attivi -->
-                <div class="border-2 border-dashed border-slate-200 hover:border-blue-400 rounded-xl p-6 bg-slate-50/50 transition flex flex-col items-center justify-center text-center group">
+                <div class="border-2 border-dashed border-slate-200 hover:border-blue-400 rounded-xl p-6 bg-slate-50/50 transition flex flex-col items-center justify-center text-center">
                     <span class="text-3xl mb-2">📄</span>
-                    <label class="block text-sm font-semibold text-slate-700 mb-1">1. Nuovi Docenti Attivi</label>
-                    <p class="text-xs text-slate-400 mb-4">Carica il file Excel (.xls, .xlsx) del nuovo anno</p>
+                    <label class="block text-sm font-semibold text-slate-700 mb-1">1. Nuovi Docenti Attivi (Anno Nuovo)</label>
+                    <p class="text-xs text-slate-400 mb-4">Trascina o seleziona l'Excel ufficiale (.xls, .xlsx)</p>
                     <input type="file" id="fileActive" accept=".xls,.xlsx,.csv" class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer"/>
-                    <div id="statusActive" class="text-xs font-medium text-emerald-600 mt-3 hidden">✓ File caricato con successo</div>
+                    <div id="statusActive" class="text-xs font-medium text-emerald-600 mt-3 hidden">✓ File caricato e analizzato</div>
                 </div>
 
                 <!-- Input 2: Esportazione Gruppo attuale -->
-                <div class="border-2 border-dashed border-slate-200 hover:border-blue-400 rounded-xl p-6 bg-slate-50/50 transition flex flex-col items-center justify-center text-center group">
+                <div class="border-2 border-dashed border-slate-200 hover:border-blue-400 rounded-xl p-6 bg-slate-50/50 transition flex flex-col items-center justify-center text-center">
                     <span class="text-3xl mb-2">👥</span>
-                    <label class="block text-sm font-semibold text-slate-700 mb-1">2. Elenco docenti@ Attuale</label>
-                    <p class="text-xs text-slate-400 mb-4">Carica il CSV esportato da Google Gruppi</p>
+                    <label class="block text-sm font-semibold text-slate-700 mb-1">2. Elenco docenti@ Attuale (Da Google)</label>
+                    <p class="text-xs text-slate-400 mb-4">Trascina o seleziona il CSV esportato dal gruppo</p>
                     <input type="file" id="fileGroup" accept=".csv,.xls,.xlsx" class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer"/>
-                    <div id="statusGroup" class="text-xs font-medium text-emerald-600 mt-3 hidden">✓ File caricato con successo</div>
+                    <div id="statusGroup" class="text-xs font-medium text-emerald-600 mt-3 hidden">✓ File caricato e analizzato</div>
                 </div>
 
             </div>
 
-            <!-- Campo opzionale per escludere l'email del gruppo stessa -->
-            <div class="bg-slate-50 p-4 rounded-xl flex flex-col md:flex-row items-center gap-4">
-                <div class="w-full md:w-1/2">
-                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Email del gruppo da ignorare</label>
-                    <input type="email" id="groupEmail" value="docenti@istitutostradivari.it" class="w-full bg-white border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500 font-mono"/>
+            <!-- Opzioni avanzate (Nascoste o precompilate per sicurezza) -->
+            <div class="bg-slate-50 p-4 rounded-xl flex flex-col md:flex-row items-center gap-4 border border-slate-100">
+                <div class="w-full md:w-1/3">
+                    <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Email del gruppo da escludere</label>
+                    <input type="email" id="groupEmail" value="docenti@istitutostradivari.it" class="w-full bg-white border border-slate-200 rounded-lg px-3 py-1.5 text-xs focus:outline-none font-mono text-slate-500" readonly/>
                 </div>
-                <p class="text-xs text-slate-400 md:mt-5">L'esportazione di Google include l'indirizzo del gruppo in ogni riga. Lo strumento lo scarterà automaticamente per evitare errori.</p>
+                <p class="text-xs text-slate-400 leading-normal">
+                    💡 <b>Nota tecnica:</b> L'esportazione nativa di Google include una riga con l'indirizzo del gruppo stesso. Questo campo assicura che lo strumento lo scarti automaticamente, evitando di sospendere l'intero gruppo.
+                </p>
             </div>
 
-            <!-- Azione -->
+            <!-- Bottone Azione Principale -->
             <div class="text-center pt-2">
-                <button id="btnProcess" disabled class="w-full md:w-auto bg-slate-300 text-slate-500 font-semibold px-8 py-3 rounded-xl transition shadow-md cursor-not-allowed">
-                    Elabora e Genera CSV
+                <button id="btnProcess" disabled class="w-full md:w-auto bg-slate-200 text-slate-400 font-semibold px-8 py-3 rounded-xl transition shadow-inner cursor-not-allowed uppercase tracking-wider text-sm">
+                    Attesa caricamento file...
                 </button>
             </div>
 
-            <!-- Dashboard dei Risultati (Nascosta all'inizio) -->
+            <!-- DASHBOARD RISULTATI -->
             <div id="dashboard" class="hidden border border-slate-200 rounded-xl overflow-hidden bg-slate-50/30">
-                <div class="bg-slate-100 px-6 py-3 border-b border-slate-200 font-semibold text-sm text-slate-700">📊 Resoconto dell'Elaborazione</div>
+                <div class="bg-slate-100 px-6 py-3 border-b border-slate-200 font-semibold text-sm text-slate-700 flex justify-between items-center">
+                    <span>📊 Resoconto dell'Elaborazione</span>
+                    <span class="text-xs bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold">Verifica Pronta</span>
+                </div>
                 <div class="p-6 grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
                     <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-100">
-                        <div class="text-xs font-semibold text-slate-400 uppercase">Nuovi Attivi</div>
+                        <div class="text-xs font-semibold text-slate-400 uppercase">Nel nuovo elenco</div>
                         <div id="statActive" class="text-2xl font-bold text-blue-600 mt-1">0</div>
                     </div>
                     <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-100">
-                        <div class="text-xs font-semibold text-slate-400 uppercase">Membri Attuali</div>
+                        <div class="text-xs font-semibold text-slate-400 uppercase">Nel vecchio gruppo</div>
                         <div id="statGroup" class="text-2xl font-bold text-purple-600 mt-1">0</div>
                     </div>
                     <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-100">
-                        <div class="text-xs font-semibold text-slate-400 uppercase font-bold text-emerald-600">Confermati (Attivi)</div>
+                        <div class="text-xs font-semibold text-emerald-600 uppercase font-bold">Confermati (Attivi)</div>
                         <div id="statConfirmed" class="text-2xl font-bold text-emerald-600 mt-1">0</div>
                     </div>
                     <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-100 bg-red-50/50">
-                        <div class="text-xs font-semibold text-red-500 uppercase font-bold">Non Confermati (Sospesi)</div>
+                        <div class="text-xs font-semibold text-red-500 uppercase font-bold">Cessati (Sospesi)</div>
                         <div id="statSuspended" class="text-2xl font-bold text-red-600 mt-1">0</div>
                     </div>
                 </div>
                 
-                <div class="px-6 py-4 bg-white border-t border-slate-200 text-center">
-                    <button id="btnDownload" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-8 py-3 rounded-xl shadow-lg transition flex items-center gap-2 mx-auto">
-                        💾 Scarica CSV per Google Workspace
+                <div class="px-6 py-5 bg-slate-50 border-t border-slate-200 text-center space-y-2">
+                    <button id="btnDownload" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-8 py-3 rounded-xl shadow-lg transition flex items-center gap-2 mx-auto uppercase tracking-wider text-sm">
+                        💾 Scarica CSV Pronto per Google Workspace
                     </button>
+                    <p class="text-xs text-slate-400">Il file scaricato conterrà solo gli account dei docenti che devono passare allo stato "Suspended".</p>
                 </div>
             </div>
 
@@ -112,7 +145,6 @@
         let dataGroupMembers = new Set();
         let finalCsvString = "";
 
-        // Funzione helper per trovare un'email valida all'interno di una riga di foglio di calcolo
         function extractEmailFromRow(row, ignoreEmail) {
             const emailRegex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g;
             ignoreEmail = ignoreEmail.toLowerCase().trim();
@@ -125,7 +157,7 @@
                         for (let m of matches) {
                             let emailClean = m.toLowerCase().trim();
                             if (emailClean !== ignoreEmail) {
-                                return emailClean; // Restituisce la prima email valida trovata che non sia il gruppo stesso
+                                return emailClean;
                             }
                         }
                     }
@@ -138,122 +170,94 @@
             const btn = document.getElementById('btnProcess');
             if (dataActiveTeachers.size > 0 && dataGroupMembers.size > 0) {
                 btn.removeAttribute('disabled');
-                btn.className = "w-full md:w-auto bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-3 rounded-xl transition shadow-md cursor-pointer";
+                btn.innerText = "Elabora e Confronta Dati";
+                btn.className = "w-full md:w-auto bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-3 rounded-xl transition shadow-md cursor-pointer uppercase tracking-wider text-sm animate-pulse";
             } else {
                 btn.setAttribute('disabled', 'true');
-                btn.className = "w-full md:w-auto bg-slate-300 text-slate-500 font-semibold px-8 py-3 rounded-xl transition shadow-md cursor-not-allowed";
+                btn.innerText = "Attesa caricamento file...";
+                btn.className = "w-full md:w-auto bg-slate-200 text-slate-400 font-semibold px-8 py-3 rounded-xl transition shadow-inner cursor-not-allowed uppercase tracking-wider text-sm";
             }
         }
 
-        // Lettura file Docenti Attivi
         document.getElementById('fileActive').addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (!file) return;
-            
             const reader = new FileReader();
             reader.onload = function(evt) {
                 try {
                     const data = evt.target.result;
                     const workbook = XLSX.read(data, { type: 'binary' });
-                    const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
-                    const rows = XLSX.utils.sheet_to_json(firstSheet);
-                    
+                    const rows = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]]);
                     dataActiveTeachers.clear();
                     const ignore = document.getElementById('groupEmail').value;
-                    
                     rows.forEach(r => {
                         const email = extractEmailFromRow(r, ignore);
                         if (email) dataActiveTeachers.add(email);
                     });
-                    
                     document.getElementById('statusActive').classList.remove('hidden');
                     checkInputsReady();
-                } catch (err) {
-                    alert("Errore nella lettura del file 1: " + err.message);
-                }
+                } catch (err) { alert("Errore file 1: " + err.message); }
             };
             reader.readAsBinaryString(file);
         });
 
-        // Lettura file Gruppo Attuale
         document.getElementById('fileGroup').addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (!file) return;
-            
             const reader = new FileReader();
             reader.onload = function(evt) {
                 try {
                     const data = evt.target.result;
                     const workbook = XLSX.read(data, { type: 'binary' });
-                    const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
-                    const rows = XLSX.utils.sheet_to_json(firstSheet);
-                    
+                    const rows = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]]);
                     dataGroupMembers.clear();
                     const ignore = document.getElementById('groupEmail').value;
-                    
                     rows.forEach(r => {
                         const email = extractEmailFromRow(r, ignore);
                         if (email) dataGroupMembers.add(email);
                     });
-                    
                     document.getElementById('statusGroup').classList.remove('hidden');
                     checkInputsReady();
-                } catch (err) {
-                    alert("Errore nella lettura del file 2: " + err.message);
-                }
+                } catch (err) { alert("Errore file 2: " + err.message); }
             };
             reader.readAsBinaryString(file);
         });
 
-        // Elaborazione Dati
         document.getElementById('btnProcess').addEventListener('click', function() {
             let confirmedCount = 0;
             let suspendedCount = 0;
             
-            // Intestazione ufficiale del template Google Workspace per caricamento massivo utenti
-            // Includiamo le colonne obbligatorie mantenendole vuote per l'aggiornamento, modificando solo lo Status.
+            // Intestazione corretta accettata dalla console Google Workspace
             let csvRows = ["First Name [Required],Last Name [Required],Email Address [Required],Password [Required],Org Unit Path [Required],Status [Optional]"];
             
-            // Analizziamo tutti i membri che fanno parte del gruppo attuale
             dataGroupMembers.forEach(email => {
-                let status = "Active";
                 if (dataActiveTeachers.has(email)) {
                     confirmedCount++;
-                    status = "Active";
                 } else {
                     suspendedCount++;
-                    status = "Suspended";
+                    // Aggiungiamo al CSV solo chi deve essere effettivamente Sospeso
+                    csvRows.push(`,,${email},,,Suspended`);
                 }
-                // Costruiamo la riga lasciando i campi invariati tranne email e status
-                csvRows.push(`,,${email},,,${status}`);
             });
 
-            // Generiamo la stringa CSV finale
             finalCsvString = csvRows.join("\n");
 
-            // Aggiorniamo la dashboard grafica
             document.getElementById('statActive').innerText = dataActiveTeachers.size;
             document.getElementById('statGroup').innerText = dataGroupMembers.size;
             document.getElementById('statConfirmed').innerText = confirmedCount;
             document.getElementById('statSuspended').innerText = suspendedCount;
             
             document.getElementById('dashboard').classList.remove('hidden');
-            // Scroll automatico sui risultati
             document.getElementById('dashboard').scrollIntoView({ behavior: 'smooth' });
         });
 
-        // Download del file generato
         document.getElementById('btnDownload').addEventListener('click', function() {
             if (!finalCsvString) return;
-            
             const blob = new Blob([finalCsvString], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement("a");
-            const url = URL.createObjectURL(blob);
-            
-            link.setAttribute("href", url);
-            link.setAttribute("download", "Aggiornamento_Docenti_GoogleWorkspace.csv");
+            link.setAttribute("href", URL.createObjectURL(blob));
+            link.setAttribute("download", "Aggiornamento_Docenti_Google.csv");
             link.style.visibility = 'hidden';
-            
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
